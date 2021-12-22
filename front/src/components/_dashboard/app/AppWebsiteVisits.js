@@ -6,17 +6,19 @@ import { Card, CardHeader, Box } from '@mui/material';
 import React, { useState, useEffect } from 'react';
 import { BaseOptionChart } from '../../charts';
 import Service from '../../../service/Service';
+import { useParams } from 'react-router';
 
 // ----------------------------------------------------------------------
 
 export default function AppWebsiteVisits() {
+  const { id } = useParams();
   const [data, setData] = React.useState([]);
   const [date, setDate] = React.useState([]);
 
   useEffect(() => {
     const interval = setInterval(() => {
       new Service()
-        .getSensorInfo(1)
+        .getSensorInfo(id)
         .then((res) => {
           console.log(res.data);
           setData(res.data.list);
