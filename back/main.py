@@ -52,7 +52,7 @@ def index():
 
     for i in range(7):
         req_per_day = len(db.query(SensorValue).filter(and_(SensorValue.created_at <= end_date, SensorValue.created_at >= start_date)).all())
-        day = datetime.utcfromtimestamp(end_date).strftime('%m/%d')
+        day = datetime.fromtimestamp(end_date).strftime('%m/%d')
         req_dict[day] = req_per_day
         end_date = start_date
         start_date = start_date - second
@@ -235,7 +235,7 @@ def get_sensor(_id: int):
     s_id = 1
     lb = db.query(SensorValue).filter_by(sensor_id=s_id).order_by(desc(SensorValue.created_at)).limit(20).all()
     for i in lb:
-        date_data = datetime.utcfromtimestamp(i.created_at).strftime("%H:%M")
+        date_data = datetime.fromtimestamp(i.created_at).strftime("%H:%M")
         labels.append(date_data)
 
     records = db.query(Sensor).filter_by(controller_id=_id).all()
